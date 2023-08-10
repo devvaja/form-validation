@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>REGISTRATION PAGE</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .hidden {
+            display: block;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main">
+
+        <section class="signup">
+            <!-- <img src="images/signup-bg.jpg" alt=""> -->
+            <div class="container">
+                <div class="signup-content">
+                    <form id="signup-form" onsubmit="submitForm(event)" class="signup-form">
+                        <h2 class="form-title">Create account</h2>
+                        <div class="form-group">
+                            <input type="text" class="form-input" name="name" id="name" placeholder="Your Name" />
+                            <span id="span1"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-input" name="email" id="email" placeholder="Your Email" />
+                            <span id="span2"></span>
+
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-input" name="password" id="password"
+                                placeholder="Password" />
+
+                            <span id="span3"></span>
+
+                        </div>
+
+                        <div class="form-group">
+                            <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                            <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all
+                                statements in <a href="#" class="term-service">Terms of service</a></label>
+                        </div>
+                        <div class="form-group">
+                            <button id="submit" name="Sign up" class="form-submit">Sign up</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <script>
+
+        function submitForm(event) {
+            event.preventDefault();
+
+            let name = document.getElementById('name').value;
+            let mail = document.getElementById('email').value;
+            let password = document.getElementById('password').value;
+            let error = 0;
+            let regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}/gi;   
+          
+            if (name == '') {
+                error = 1;
+                let span1 = document.getElementById('span1').innerHTML = 'please enter name*';
+                span1 = document.getElementById('span1').classList.add('hidden');
+            }
+            else {
+
+                span1 = document.getElementById('span1').innerHTML = '';
+                span1 = document.getElementById('span1').classList.remove('hidden');
+
+            }
+
+            if (mail == '') {
+                error = 1;
+                let span2 = document.getElementById('span2').innerHTML = 'please enter valid email*';
+                span2 = document.getElementById('span2').classList.add('hidden');
+            }
+            else if (!regex.test(mail)) {
+                error = 1;
+                let er = document.getElementById('span2').innerHTML = 'please enter valid email*';
+                er = document.getElementById('span2').classList.add('hidden');
+
+            }
+            else {
+
+                span2 = document.getElementById('span2').innerHTML = '';
+                span2 = document.getElementById('span2').classList.remove('hidden');
+
+            }
+
+            if (password == '') {
+                error = 1;
+                let span3 = document.getElementById('span3').innerHTML = 'please enter password*';
+                span = document.getElementById('span3').classList.add('hidden');
+            }
+            else {
+
+                span3 = document.getElementById('span3').innerHTML = '';
+                span3 = document.getElementById('span3').classList.remove('hidden');
+
+            }
+
+
+            alert(error);
+            if (error == 0) {
+
+
+                let ar = [];
+                let obj = {
+
+                    "name": name,
+                    "email": mail,
+                    "password": password
+                }
+
+
+                if (localStorage.getItem('users') != null) {
+                    ar = JSON.parse(localStorage.getItem('users'));;
+                }
+
+                let checkmail = ar.find(function (value) {
+                    return value.mail == mail
+                });
+
+                if (ar.length > 0 && checkmail > -1) {
+                     document.getElementById('span2').innerHTML = 'please enter valid email*';
+                        document.getElementById('span2').classList.add('hidden');
+                } else {
+                    document.getElementById('span2').innerHTML = '';
+                   document.getElementById('span2').classList.add('hidden');
+                    ar.push(obj);
+                    localStorage.setItem("users", JSON.stringify(ar));
+                    location.assign('login-form-20/login-form-20/loginPage.html');
+
+                }
+
+
+            }
+
+        }
+
+
+
+
+
+
+    </script>
+
+    <!-- JS -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+
+</html>
